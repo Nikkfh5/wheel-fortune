@@ -103,15 +103,28 @@
         drawWheel();
         ctx.restore();
 
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          spinning = false;
+       if (progress < 1) {
+  requestAnimationFrame(animate);
+} else {
+  spinning = false;
 
-          const current = (angle + Math.PI / 2) % (2 * Math.PI);
-          const index = Math.floor((2 * Math.PI - current) / arc) % total;
+  const current = (angle + Math.PI / 2) % (2 * Math.PI);
+  const index = Math.floor((2 * Math.PI - current) / arc) % total;
 
-          alert("Ты выиграл: " + prizes[index]);
+  const result = prizes[index];
+
+  // Отправляем результат обратно в Telegram
+  if (window.Telegram && Telegram.WebApp && Telegram.WebApp.sendData) {
+    Telegram.WebApp.sendData(JSON.stringify({ result }));
+  }
+
+  // Показываем на экране (опционально)
+  alert("Ты выиграл: " + result);
+}
+
+// Показываем сообщение на сайте
+alert("Ты выиграл: " + result);
+
         }
       }
 
