@@ -108,9 +108,8 @@
         } else {
           spinning = false;
 
-          const current = (2 * Math.PI - (angle % (2 * Math.PI))) % (2 * Math.PI);
-const index = Math.round(current / arc) % total;
-
+          const current = (angle + Math.PI / 2) % (2 * Math.PI);
+          const index = Math.floor((2 * Math.PI - current) / arc) % total;
 
           alert("Ты выиграл: " + prizes[index]);
         }
