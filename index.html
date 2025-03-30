@@ -23,18 +23,18 @@
     }
     .arrow {
       position: absolute;
-      top: -20px;
+      top: 145px;
       left: 50%;
-      transform: translateX(-50%) rotate(180deg);
+      transform: translateX(-50%);
       width: 0;
       height: 0;
       border-left: 15px solid transparent;
       border-right: 15px solid transparent;
-      border-top: 30px solid red;
+      border-top: 25px solid red;
       z-index: 10;
     }
     button {
-      margin-top: 20px;
+      margin-top: 50px;
       padding: 10px 20px;
       font-size: 18px;
       background: #1d9bf0;
@@ -48,8 +48,8 @@
 <body>
   <div style="text-align:center;">
     <div class="wrapper">
-      <div class="arrow"></div>
       <canvas id="wheel" width="300" height="300"></canvas>
+      <div class="arrow"></div>
     </div>
     <br/>
     <button onclick="spin()">Крутить 🎡</button>
@@ -107,8 +107,11 @@
           requestAnimationFrame(animate);
         } else {
           spinning = false;
+
+          // 0 градусов теперь ВНИЗ (а не вверх)
           const normalized = (angle % (2 * Math.PI));
           const index = Math.floor((normalized + arc / 2) % (2 * Math.PI) / arc);
+
           alert("Ты выиграл: " + prizes[index]);
         }
       }
