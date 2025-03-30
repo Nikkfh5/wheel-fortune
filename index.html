@@ -22,17 +22,17 @@
       border-radius: 50%;
     }
     .arrow {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%) rotate(180deg);
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-top: 30px solid red;
-  z-index: 10;
-}
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%) rotate(180deg);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 30px solid red;
+      z-index: 10;
+    }
     button {
       margin-top: 20px;
       padding: 10px 20px;
@@ -107,7 +107,7 @@
           requestAnimationFrame(animate);
         } else {
           spinning = false;
-          const index = total - Math.floor((angle % (2 * Math.PI)) / arc) - 1;
+          const index = Math.floor(((2 * Math.PI - (angle % (2 * Math.PI))) + arc / 2) % (2 * Math.PI) / arc);
           alert("Ты выиграл: " + prizes[index]);
         }
       }
