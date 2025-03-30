@@ -23,7 +23,7 @@
     }
     .arrow {
       position: absolute;
-      top: -30px;
+      top: -10px; /* Чуть ниже */
       left: 50%;
       transform: translateX(-50%);
       width: 0;
@@ -108,7 +108,7 @@
         } else {
           spinning = false;
           const normalized = angle % (2 * Math.PI);
-          const index = Math.floor((2 * Math.PI - normalized + arc / 2) % (2 * Math.PI) / arc);
+          const index = Math.floor(((normalized + Math.PI / 2) % (2 * Math.PI)) / arc);
           alert("Ты выиграл: " + prizes[index]);
         }
       }
