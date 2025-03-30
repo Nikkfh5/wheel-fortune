@@ -15,8 +15,23 @@
       align-items: center;
       font-family: sans-serif;
     }
+    .wrapper {
+      position: relative;
+    }
     canvas {
       border-radius: 50%;
+    }
+    .arrow {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 30px solid red;
+      z-index: 10;
     }
     button {
       margin-top: 20px;
@@ -32,14 +47,17 @@
 </head>
 <body>
   <div style="text-align:center;">
-    <canvas id="wheel" width="300" height="300"></canvas>
+    <div class="wrapper">
+      <div class="arrow"></div>
+      <canvas id="wheel" width="300" height="300"></canvas>
+    </div>
     <br/>
     <button onclick="spin()">Крутить 🎡</button>
   </div>
 
   <script>
-    const prizes = ["Ничего :(", "10%", "50%", "100%"];
-    const colors = ["#f94144","#f3722c","#f8961e","#90be6d"];
+    const prizes = ["50%", "Ничего :(", "10%", "Ничего :(", "10%", "Ничего :(", "Ничего :(", "100%"];
+    const colors = ["#f9c74f", "#87CEFA", "#f3722c", "#90be6d", "#f3722c", "#87CEFA", "#90be6d", "#f9c74f"];
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
     const total = prizes.length;
@@ -52,7 +70,7 @@
         ctx.moveTo(150, 150);
         ctx.arc(150, 150, 140, i * arc, (i + 1) * arc);
         ctx.fill();
-        ctx.fillStyle = "#fff";
+        ctx.fillStyle = "#000";
         ctx.font = "16px sans-serif";
         ctx.save();
         ctx.translate(150, 150);
