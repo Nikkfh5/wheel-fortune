@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Колесо фортуны</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #fefefe;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+    canvas {
+      border-radius: 50%;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #1d9bf0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align:center;">
+    <canvas id="wheel" width="300" height="300"></canvas>
+    <br/>
+    <button onclick="spin()">Крутить 🎡</button>
+  </div>
+
+  <script>
+    const prizes = ["Ничего :(", "10%", "50%", "100%"];
+    const colors = ["#f94144","#f3722c","#f8961e","#90be6d"];
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const total = prizes.length;
+    const arc = 2 * Math.PI / total;
+
+    function drawWheel() {
+      for(let i = 0; i < total; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(150, 150);
+        ctx.arc(150, 150, 140, i * arc, (i + 1) * arc);
+        ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.font = "16px sans-serif";
+        ctx.save();
+        ctx.translate(150, 150);
+        ctx.rotate((i + 0.5) * arc);
+        ctx.fillText(prizes[i], 60, 5);
+        ctx.restore();
+      }
+    }
+
+    let angle = 0;
+    let spinning = false;
+
+    function spin() {
+      if (spinning) return;
+      spinning = true;
+      const target = Math.random() * 2 * Math.PI;
+      const spinAngle = 20 * 2 * Math.PI + target;
+      const duration = 3000;
+      const start = performance.now();
+
+      function animate(t) {
+        const elapsed = t - start;
+        const progress = Math.min(elapsed / duration, 1);
+        angle = spinAngle * easeOut(progress);
+        ctx.clearRect(0, 0, 300, 300);
+        ctx.save();
+        ctx.translate(150, 150);
+        ctx.rotate(angle);
+        ctx.translate(-150, -150);
+        drawWheel();
+        ctx.restore();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          spinning = false;
+          const index = total - Math.floor((angle % (2 * Math.PI)) / arc) - 1;
+          alert("Ты выиграл: " + prizes[index]);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function easeOut(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    drawWheel();
+  </script>
+</body>
+</html>
